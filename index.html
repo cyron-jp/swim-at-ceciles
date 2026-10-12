@@ -1,803 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Swim @ Cecile's – Reservations</title>
-	<link rel="icon" href="logo.png">
-	<style>
-	:root {
-		--p: #2236c7;
-		--p2: #3b82f6;
-		--aq: #4fc3f7;
-		--sun: #fbb934;
-		--bg: #eaf3ff;
-		--card: #fff;
-		--t: #0f1b4d;
-		--m: #5b6b9a;
-		--ok: #16a34a;
-		--warn: #d97706;
-		--bad: #dc2626;
-		--b: #d6e2fb;
-		--w1: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30Q150 0 300 30T600 30V60H0Z' fill='%23fff'/%3E%3C/svg%3E");
-		--w2: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30Q150 0 300 30T600 30V60H0Z' fill='%23eaf3ff'/%3E%3C/svg%3E");
-		--w3: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30Q150 0 300 30T600 30V60H0Z' fill='%232236c7'/%3E%3C/svg%3E")
-	}
-	
-	* {
-		box-sizing: border-box
-	}
-	
-	body {
-		margin: 0;
-		font-family: system-ui, -apple-system, sans-serif;
-		background: var(--bg);
-		color: var(--t)
-	}
-	
-	header {
-		background: #fff;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 6px 16px;
-		flex-wrap: wrap;
-		gap: 6px
-	}
-	
-	header img {
-		height: 68px;
-		display: block
-	}
-	
-	nav {
-		display: flex;
-		gap: 4px;
-		flex-wrap: wrap
-	}
-	
-	nav button {
-		background: none;
-		border: 0;
-		color: var(--p);
-		padding: 8px 14px;
-		border-radius: 99px;
-		cursor: pointer;
-		font-size: 14px;
-		font-weight: 600
-	}
-	
-	nav button.on {
-		background: var(--p);
-		color: #fff
-	}
-	
-	.wv {
-		height: 40px;
-		background: var(--w1) repeat-x 0 0/600px 40px;
-		animation: fl 9s linear infinite
-	}
-	
-	.wv.t {
-		transform: scaleY(-1);
-		margin-top: -1px
-	}
-	
-	.wv.b {
-		background-image: var(--w2)
-	}
-	
-	.wv.f {
-		background-image: var(--w3);
-		margin-top: 28px
-	}
-	
-	@keyframes fl {
-		to {
-			background-position-x: 600px
-		}
-	}
-	
-	main {
-		max-width: 960px;
-		margin: auto;
-		padding: 12px 16px
-	}
-	
-	.hero {
-		position: relative;
-		overflow: hidden;
-		border-radius: 20px;
-		color: #fff;
-		padding: 36px 22px 70px;
-		background: linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px) 0 0/36px 36px, linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px) 0 0/36px 36px, linear-gradient(160deg, #2236c7, #3b82f6 60%, #4fc3f7)
-	}
-	
-	.hero h1 {
-		font-size: 34px;
-		line-height: 1.1;
-		margin: 0 0 10px;
-		max-width: 70%
-	}
-	
-	.hero p {
-		max-width: 480px;
-		opacity: .95
-	}
-	
-	.hero .wv {
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: -1px
-	}
-	
-	.sun {
-		position: absolute;
-		top: 22px;
-		right: 24px;
-		width: 78px;
-		height: 78px;
-		border-radius: 50%;
-		isolation: isolate;
-		background: radial-gradient(circle, #ffe08a, #fbb934);
-		box-shadow: 0 0 30px 8px rgba(251, 185, 52, .55)
-	}
-	
-	.sun::before {
-		content: '';
-		position: absolute;
-		inset: -34px;
-		z-index: -1;
-		border-radius: 50%;
-		background: repeating-conic-gradient(rgba(255, 214, 102, .8) 0 7deg, transparent 7deg 22deg);
-		-webkit-mask: radial-gradient(circle, #000 35%, transparent 70%);
-		mask: radial-gradient(circle, #000 35%, transparent 70%);
-		animation: sp 40s linear infinite
-	}
-	
-	@keyframes sp {
-		to {
-			transform: rotate(360deg)
-		}
-	}
-	
-	.bub {
-		position: absolute;
-		border-radius: 50%;
-		border: 2px solid rgba(255, 255, 255, .5);
-		animation: bb 6s ease-in-out infinite
-	}
-	
-	@keyframes bb {
-		50% {
-			transform: translateY(-14px)
-		}
-	}
-	
-	h2.s {
-		color: var(--p);
-		margin: 26px 0 4px
-	}
-	
-	.sub {
-		color: var(--m);
-		margin: 0 0 10px;
-		font-size: 14px
-	}
-	
-	.grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 12px;
-		margin: 12px 0
-	}
-	
-	.card {
-		background: var(--card);
-		border: 1px solid var(--b);
-		border-radius: 16px;
-		padding: 16px;
-		box-shadow: 0 4px 14px rgba(34, 54, 199, .08)
-	}
-	
-	.tile {
-		padding: 0;
-		overflow: hidden;
-		transition: transform .2s
-	}
-	
-	.tile:hover {
-		transform: translateY(-4px)
-	}
-	
-	.tile .ic {
-		height: 96px;
-		display: grid;
-		place-items: center;
-		font-size: 44px;
-		background: radial-gradient(circle at 80% 15%, #ffe08a 0 14px, transparent 15px), linear-gradient(160deg, #7dd3fc, #3b82f6)
-	}
-	
-	.tile div.tx {
-		padding: 12px 14px
-	}
-	
-	.tile b {
-		color: var(--p)
-	}
-	
-	.step {
-		display: flex;
-		gap: 10px;
-		align-items: flex-start
-	}
-	
-	.step i {
-		flex: none;
-		width: 34px;
-		height: 34px;
-		border-radius: 50%;
-		background: var(--sun);
-		color: var(--p);
-		font-style: normal;
-		font-weight: 800;
-		display: grid;
-		place-items: center
-	}
-	
-	.ticket {
-		position: relative;
-		border-top: 6px solid var(--sun);
-		text-align: center
-	}
-	
-	.ticket::after {
-		content: '';
-		position: absolute;
-		left: 12px;
-		right: 12px;
-		bottom: 56px;
-		border-top: 2px dashed var(--b)
-	}
-	
-	.price {
-		font-size: 30px;
-		font-weight: 800;
-		color: var(--p)
-	}
-	
-	.btn {
-		background: var(--p);
-		color: #fff;
-		border: 0;
-		border-radius: 99px;
-		padding: 11px 20px;
-		font-size: 15px;
-		cursor: pointer;
-		font-weight: 600
-	}
-	
-	.btn.yel {
-		background: var(--sun);
-		color: var(--p)
-	}
-	
-	.btn.ghost {
-		background: rgba(255, 255, 255, .18);
-		border: 1px solid #fff
-	}
-	
-	.btn.alt {
-		background: #fff;
-		color: var(--p);
-		border: 1px solid var(--p)
-	}
-	
-	.btn.ok {
-		background: var(--ok)
-	}
-	
-	.btn.bad {
-		background: var(--bad)
-	}
-	
-	.btn.sm {
-		padding: 5px 12px;
-		font-size: 13px
-	}
-	
-	label {
-		display: block;
-		font-size: 13px;
-		color: var(--m);
-		margin: 10px 0 4px
-	}
-	
-	input,
-	select {
-		width: 100%;
-		padding: 11px;
-		border: 1px solid var(--b);
-		border-radius: 10px;
-		font-size: 15px;
-		background: #fff
-	}
-	
-	.seg {
-		display: flex;
-		gap: 8px
-	}
-	
-	.seg button {
-		flex: 1;
-		padding: 11px;
-		border: 1px solid var(--b);
-		background: #fff;
-		border-radius: 12px;
-		cursor: pointer
-	}
-	
-	.seg button.on {
-		border-color: var(--p);
-		background: #eef2ff;
-		color: var(--p);
-		font-weight: 700
-	}
-	
-	.steps {
-		display: flex;
-		gap: 6px;
-		margin-bottom: 12px
-	}
-	
-	.steps i {
-		flex: 1;
-		height: 6px;
-		border-radius: 9px;
-		background: var(--b)
-	}
-	
-	.steps i.on {
-		background: var(--sun)
-	}
-	
-	.pill {
-		padding: 2px 9px;
-		border-radius: 99px;
-		font-size: 12px;
-		color: #fff
-	}
-	
-	.pending {
-		background: var(--warn)
-	}
-	
-	.approved {
-		background: var(--ok)
-	}
-	
-	.rejected {
-		background: var(--bad)
-	}
-	
-	.avail {
-		padding: 9px 12px;
-		border-radius: 10px;
-		font-size: 14px;
-		margin-top: 10px
-	}
-	
-	.avail.g {
-		background: #dcfce7;
-		color: #166534
-	}
-	
-	.avail.r {
-		background: #fee2e2;
-		color: #991b1b
-	}
-	
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 13px
-	}
-	
-	th,
-	td {
-		text-align: left;
-		padding: 8px 4px;
-		border-bottom: 1px solid var(--b)
-	}
-	
-	.scroll {
-		overflow-x: auto
-	}
-	
-	.cal {
-		display: grid;
-		grid-template-columns: repeat(7, 1fr);
-		gap: 3px;
-		text-align: center;
-		font-size: 12px
-	}
-	
-	.cal div {
-		padding: 8px 0;
-		border-radius: 8px;
-		background: #f1f6ff
-	}
-	
-	.cal .h {
-		background: none;
-		color: var(--m)
-	}
-	
-	.cal .bk {
-		background: #fef3c7
-	}
-	
-	.cal .ap {
-		background: #bbf7d0
-	}
-	
-	.cal .ev {
-		background: #fecaca;
-		font-weight: 700
-	}
-	
-	.bar {
-		height: 14px;
-		background: linear-gradient(90deg, var(--p), var(--aq));
-		border-radius: 99px
-	}
-	
-	.stat {
-		font-size: 26px;
-		font-weight: 800;
-		color: var(--p)
-	}
-	
-	.m {
-		color: var(--m);
-		font-size: 13px
-	}
-	
-	canvas {
-		image-rendering: pixelated;
-		border: 6px solid #fff;
-		border-radius: 8px;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, .15)
-	}
-	
-	footer {
-		background: var(--p);
-		color: #fff;
-		text-align: center;
-		padding: 10px 16px 28px;
-		font-size: 13px
-	}
-	
-	footer img {
-		height: 70px;
-		background: #fff;
-		border-radius: 12px;
-		padding: 4px
-	}
-	</style>
-</head>
-
-<body class="hi">
-	<header><img src="logo.png" alt="Swim @ Cecile's">
-		<nav id="nav"></nav>
-	</header>
-	<div class="wv t deco"></div>
-	<main id="app"></main>
-	<div class="wv f deco"></div>
-	<footer><img src="logo.png" alt="Swim @ Cecile's">
-		<p>📍 Cor. BF Resort Village, Las Piñas City
-			<br>📞 0917-532-0935
-			<br>#swimatceciles #cecilesresort #LasPiñas #BFRV</p>
-		<p>© Swim @ Cecile's</p>
-	</footer>
-	<script>
-	const $ = s => document.querySelector(s);
-	const CAP = 50,
-		AD = 150,
-		KD = 100,
-		EV = 8000; // sample prices (placeholders)
-	const SES = {
-		day: '9AM–6PM'
-	};
-	const iso = n => {
-		const d = new Date();
-		d.setDate(d.getDate() + n);
-		return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0')
-	};
-	const isOpen = d => new Date(d + 'T00:00').getDay() !== 1;
-
-	function nextOpen() {
-		for(let i = 1; i < 9; i++)
-			if(isOpen(iso(i))) return iso(i)
-	}
-	let BK = [{
-		id: 'CEC-1001',
-		name: 'Maria Santos',
-		type: 'walkin',
-		date: nextOpen(),
-		ses: 'day',
-		qty: 6,
-		amt: 750,
-		st: 'approved'
-	}, {
-		id: 'CEC-1002',
-		name: 'J. Reyes',
-		type: 'event',
-		date: iso(5),
-		ses: 'day',
-		qty: 0,
-		amt: EV,
-		st: 'approved'
-	}, {
-		id: 'CEC-1003',
-		name: 'A. Dela Cruz',
-		type: 'walkin',
-		date: iso(2),
-		ses: 'day',
-		qty: 4,
-		amt: 500,
-		st: 'pending'
-	}, {
-		id: 'CEC-1004',
-		name: 'Lopez Family',
-		type: 'event',
-		date: iso(9),
-		ses: 'day',
-		qty: 0,
-		amt: EV,
-		st: 'pending'
-	}];
-	let view = 'home',
-		B = fresh(),
-		last = null;
-
-	function fresh() {
-		return {
-			step: 1,
-			type: 'walkin',
-			date: nextOpen(),
-			ses: 'day',
-			ad: 2,
-			kd: 0,
-			name: '',
-			phone: '',
-			email: '',
-			file: ''
-		}
-	}
-	const live = b => b.st !== 'rejected';
-
-	function left(date, ses, type) {
-		const l = BK.filter(b => live(b) && b.date === date);
-		if(type === 'event') return l.some(b => b.type === 'event') ? 0 : 1;
-		return CAP - l.filter(b => b.type === 'walkin').reduce((s, b) => s + b.qty, 0)
-	}
-	const total = () => B.type === 'event' ? EV : B.ad * AD + B.kd * KD;
-
-	function nav() {
-		const t = [
-			['home', 'Home'],
-			['book', 'Book'],
-			['ticket', 'My Ticket'],
-			['admin', 'Admin']
-		];
-		$('#nav').innerHTML = t.map(([k, n]) => `<button class="${view===k?'on':''}" onclick="go('${k}')">${n}</button>`).join('')
-	}
-
-	function go(v) {
-		view = v;
-		if(v === 'book' && B.step === 4) B = fresh();
-		render()
-	}
-
-	function render() {
-		nav();
-		$('#app').innerHTML = ({
-			home, book, ticket, admin
-		})[view]();
-		if(view === 'ticket') drawQR()
-	}
-
-	function home() {
-		const am = [
-			['🏊', '6 Swimming pools', '2 of them for private events'],
-			['🌴', 'Kubos & tables', 'Tambayan for the whole group'],
-			['🍔', 'Mini canteen', 'Para sa gutom at uhaw'],
-			['🎉', 'Function area', 'For celebrations & private events']
-		];
-		return `<section class="hero"><div class="sun deco"></div>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swim @ Cecile's – Reservations</title><link rel="icon" href="logo.png">
+<style>
+:root{--p:#2236c7;--p2:#3b82f6;--aq:#4fc3f7;--sun:#fbb934;--bg:#eaf3ff;--card:#fff;--t:#0f1b4d;--m:#5b6b9a;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--b:#d6e2fb;
+--w1:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30Q150 0 300 30T600 30V60H0Z' fill='%23fff'/%3E%3C/svg%3E");--w2:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30Q150 0 300 30T600 30V60H0Z' fill='%23eaf3ff'/%3E%3C/svg%3E");--w3:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30Q150 0 300 30T600 30V60H0Z' fill='%232236c7'/%3E%3C/svg%3E")}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t)}
+header{background:#fff;display:flex;justify-content:space-between;align-items:center;padding:6px 16px;flex-wrap:wrap;gap:6px}
+header img{height:68px;display:block}
+nav{display:flex;gap:4px;flex-wrap:wrap}nav button{background:none;border:0;color:var(--p);padding:8px 14px;border-radius:99px;cursor:pointer;font-size:14px;font-weight:600}
+nav button.on{background:var(--p);color:#fff}
+.wv{height:40px;background:var(--w1) repeat-x 0 0/600px 40px;animation:fl 9s linear infinite}
+.wv.t{transform:scaleY(-1);margin-top:-1px}.wv.b{background-image:var(--w2)}.wv.f{background-image:var(--w3);margin-top:28px}
+@keyframes fl{to{background-position-x:600px}}
+main{max-width:960px;margin:auto;padding:12px 16px}
+.hero{position:relative;overflow:hidden;border-radius:20px;color:#fff;padding:36px 22px 70px;
+background:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px) 0 0/36px 36px,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px) 0 0/36px 36px,linear-gradient(160deg,#2236c7,#3b82f6 60%,#4fc3f7)}
+.hero h1{font-size:34px;line-height:1.1;margin:0 0 10px;max-width:70%}.hero p{max-width:480px;opacity:.95}
+.hero .wv{position:absolute;left:0;right:0;bottom:-1px}
+.sun{position:absolute;top:22px;right:24px;width:78px;height:78px;border-radius:50%;isolation:isolate;background:radial-gradient(circle,#ffe08a,#fbb934);box-shadow:0 0 30px 8px rgba(251,185,52,.55)}
+.sun::before{content:'';position:absolute;inset:-34px;z-index:-1;border-radius:50%;background:repeating-conic-gradient(rgba(255,214,102,.8) 0 7deg,transparent 7deg 22deg);-webkit-mask:radial-gradient(circle,#000 35%,transparent 70%);mask:radial-gradient(circle,#000 35%,transparent 70%);animation:sp 40s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.bub{position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.5);animation:bb 6s ease-in-out infinite}
+@keyframes bb{50%{transform:translateY(-14px)}}
+h2.s{color:var(--p);margin:26px 0 4px}.sub{color:var(--m);margin:0 0 10px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:12px 0}
+.card{background:var(--card);border:1px solid var(--b);border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(34,54,199,.08)}
+.tile{padding:0;overflow:hidden;transition:transform .2s}.tile:hover{transform:translateY(-4px)}
+.tile .ic{height:96px;display:grid;place-items:center;font-size:44px;background:radial-gradient(circle at 80% 15%,#ffe08a 0 14px,transparent 15px),linear-gradient(160deg,#7dd3fc,#3b82f6)}
+.tile div.tx{padding:12px 14px}.tile b{color:var(--p)}
+.step{display:flex;gap:10px;align-items:flex-start}.step i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--sun);color:var(--p);font-style:normal;font-weight:800;display:grid;place-items:center}
+.ticket{position:relative;border-top:6px solid var(--sun);text-align:center}
+.ticket::after{content:'';position:absolute;left:12px;right:12px;bottom:56px;border-top:2px dashed var(--b)}
+.price{font-size:30px;font-weight:800;color:var(--p)}
+.btn{background:var(--p);color:#fff;border:0;border-radius:99px;padding:11px 20px;font-size:15px;cursor:pointer;font-weight:600}
+.btn.yel{background:var(--sun);color:var(--p)}.btn.ghost{background:rgba(255,255,255,.18);border:1px solid #fff}
+.btn.alt{background:#fff;color:var(--p);border:1px solid var(--p)}.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}.btn.sm{padding:5px 12px;font-size:13px}
+label{display:block;font-size:13px;color:var(--m);margin:10px 0 4px}
+input,select{width:100%;padding:11px;border:1px solid var(--b);border-radius:10px;font-size:15px;background:#fff}
+.seg{display:flex;gap:8px}.seg button{flex:1;padding:11px;border:1px solid var(--b);background:#fff;border-radius:12px;cursor:pointer}
+.seg button.on{border-color:var(--p);background:#eef2ff;color:var(--p);font-weight:700}
+.steps{display:flex;gap:6px;margin-bottom:12px}.steps i{flex:1;height:6px;border-radius:9px;background:var(--b)}.steps i.on{background:var(--sun)}
+.pill{padding:2px 9px;border-radius:99px;font-size:12px;color:#fff}
+.pending{background:var(--warn)}.approved{background:var(--ok)}.rejected{background:var(--bad)}
+.avail{padding:9px 12px;border-radius:10px;font-size:14px;margin-top:10px}
+.avail.g{background:#dcfce7;color:#166534}.avail.r{background:#fee2e2;color:#991b1b}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px 4px;border-bottom:1px solid var(--b)}
+.scroll{overflow-x:auto}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;font-size:12px}
+.cal div{padding:8px 0;border-radius:8px;background:#f1f6ff}.cal .h{background:none;color:var(--m)}
+.cal .bk{background:#fef3c7}.cal .ap{background:#bbf7d0}.cal .ev{background:#fecaca;font-weight:700}
+.bar{height:14px;background:linear-gradient(90deg,var(--p),var(--aq));border-radius:99px}
+.stat{font-size:26px;font-weight:800;color:var(--p)}.m{color:var(--m);font-size:13px}
+canvas{image-rendering:pixelated;border:6px solid #fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+footer{background:var(--p);color:#fff;text-align:center;padding:10px 16px 28px;font-size:13px}footer img{height:70px;background:#fff;border-radius:12px;padding:4px}
+</style></head><body class="hi">
+<header><img src="logo.png" alt="Swim @ Cecile's"><nav id="nav"></nav></header><div class="wv t deco"></div>
+<main id="app"></main><div class="wv f deco"></div><footer><img src="logo.png" alt="Swim @ Cecile's"><p>📍 Cor. BF Resort Village, Las Piñas City<br>📞 0917-532-0935<br>#swimatceciles #cecilesresort #LasPiñas #BFRV</p><p>© Swim @ Cecile's</p></footer>
+<script>
+const $=s=>document.querySelector(s);
+const CAP=50,AD=150,KD=100,EV=8000; // sample prices (placeholders)
+const SES={day:'9AM–6PM'};
+const iso=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const isOpen=d=>new Date(d+'T00:00').getDay()!==1;
+function nextOpen(){for(let i=1;i<9;i++)if(isOpen(iso(i)))return iso(i)}
+let BK=[
+ {id:'CEC-1001',name:'Maria Santos',type:'walkin',date:nextOpen(),ses:'day',qty:6,amt:750,st:'approved'},
+ {id:'CEC-1002',name:'J. Reyes',type:'event',date:iso(5),ses:'day',qty:0,amt:EV,st:'approved'},
+ {id:'CEC-1003',name:'A. Dela Cruz',type:'walkin',date:iso(2),ses:'day',qty:4,amt:500,st:'pending'},
+ {id:'CEC-1004',name:'Lopez Family',type:'event',date:iso(9),ses:'day',qty:0,amt:EV,st:'pending'}];
+let view='home',B=fresh(),last=null;
+function fresh(){return{step:1,type:'walkin',date:nextOpen(),ses:'day',ad:2,kd:0,name:'',phone:'',email:'',file:''}}
+const live=b=>b.st!=='rejected';
+function left(date,ses,type){const l=BK.filter(b=>live(b)&&b.date===date);
+  if(type==='event')return l.some(b=>b.type==='event')?0:1;
+  return CAP-l.filter(b=>b.type==='walkin').reduce((s,b)=>s+b.qty,0)}
+const total=()=>B.type==='event'?EV:B.ad*AD+B.kd*KD;
+function nav(){const t=[['home','Home'],['book','Book'],['ticket','My Ticket'],['admin','Admin']];
+ $('#nav').innerHTML=t.map(([k,n])=>`<button class="${view===k?'on':''}" onclick="go('${k}')">${n}</button>`).join('')}
+function go(v){view=v;if(v==='book'&&B.step===4)B=fresh();render()}
+function render(){nav();$('#app').innerHTML=({home,book,ticket,admin})[view]();if(view==='ticket')drawQR()}
+function home(){const am=[['🏊','6 Swimming pools','2 of them for private events'],['🌴','Kubos & tables','Tambayan for the whole group'],['🍔','Mini canteen','Para sa gutom at uhaw'],['🎉','Function area','For celebrations & private events']];
+return`<section class="hero"><div class="sun deco"></div>
 <span class="bub deco" style="width:18px;height:18px;left:60%;bottom:90px"></span><span class="bub deco" style="width:10px;height:10px;left:72%;bottom:120px;animation-delay:1s"></span>
 <h1>Tara, swimming na! ☀️</h1><p>Walang kailangan bonggang plano — samahan lang, konting baon, at good vibes!</p>
 <button class="btn yel" onclick="go('book')">🎟 Book a slot</button> <button class="btn ghost" onclick="B.type='event';go('book')">🎉 Reserve the venue</button>
 <p style="font-size:14px;margin-top:16px">🕘 Open Tue–Sun, 9AM–6PM · Closed Mondays</p>
 <div class="wv b deco"></div></section>
 <h2 class="s">Dito sa Swim at Cecile's</h2><p class="sub">Family? Barkada? Birthday? Reunion? Pwede! Basta ang importante, SAYA! ❤</p>
-<div class="grid">${am.map(a=>` < div class = "card tile" > < div class = "ic" > $ {
-			a[0]
-		} < /div><div class="tx"><b>${a[1]}</b > < div class = "m" > $ {
-			a[2]
-		} < /div></div > < /div>`).join('')}</div > < h2 class = "s" > Book in 3 easy steps < /h2><div class="grid">
-		$ {
-			['Pick your date (Tuesday to Sunday)', 'Pay via GCash and upload your receipt', 'Get approved and show your QR at the gate'].map((t, i) => `<div class="card step"><i>${i+1}</i><div>${t}</div></div>`).join('')
-		} < /div> < h2 class = "s" > Rates < /h2><div class="grid"> < div class = "card ticket" > < div > ☀️Adult day swim < /div><div class="price">₱${AD}</div > < p class = "m" > per person < /p></div > < div class = "card ticket" > < div > 🌊Kid day swim < /div><div class="price">₱${KD}</div > < p class = "m" > per person < /p></div > < div class = "card ticket" > < div > 🎉Private event < /div><div class="price">₱${EV.toLocaleString()}</div > < p class = "m" > per day·
-		function area + 2 private pools < /p></div > < /div> < p style = "text-align:center" > < button class = "btn"
-		onclick = "go('book')" > Reserve your splash🏊 < /button></p > < h2 class = "s" > Visit us < /h2><div class="card">📍 Cor. BF Resort Village, Las Piñas City<br>📞 <a href="tel:09175320935">0917-532-0935</a > < br > 🕘Tuesday to Sunday, 9 AM– 6 PM(closed Mondays) < p class = "m" > Huwag puro“ next time”— swimming na!😎💦 < /p></div > `}
+<div class="grid">${am.map(a=>`<div class="card tile"><div class="ic">${a[0]}</div><div class="tx"><b>${a[1]}</b><div class="m">${a[2]}</div></div></div>`).join('')}</div>
+<h2 class="s">Book in 3 easy steps</h2><div class="grid">
+${['Pick your date (Tuesday to Sunday)','Pay via GCash and upload your receipt','Get approved and show your QR at the gate'].map((t,i)=>`<div class="card step"><i>${i+1}</i><div>${t}</div></div>`).join('')}</div>
+<h2 class="s">Rates</h2><div class="grid">
+<div class="card ticket"><div>☀️ Adult day swim</div><div class="price">₱${AD}</div><p class="m">per person</p></div>
+<div class="card ticket"><div>🌊 Kid day swim</div><div class="price">₱${KD}</div><p class="m">per person</p></div>
+<div class="card ticket"><div>🎉 Private event</div><div class="price">₱${EV.toLocaleString()}</div><p class="m">per day · function area + 2 private pools</p></div></div>
+<p style="text-align:center"><button class="btn" onclick="go('book')">Reserve your splash 🏊</button></p>
+<h2 class="s">Visit us</h2><div class="card">📍 Cor. BF Resort Village, Las Piñas City<br>📞 <a href="tel:09175320935">0917-532-0935</a><br>🕘 Tuesday to Sunday, 9AM–6PM (closed Mondays)<p class="m">Huwag puro “next time” — swimming na! 😎💦</p></div>`}
 function book(){
- const bar=` < div class = "steps" > $ {
-			[1, 2, 3].map(i => `<i class="${B.step>=i?'on':''}"></i>`).join('')
-		} < /div>`;
-		if(B.step === 1) {
-			const closed = !isOpen(B.date),
-				n = closed ? 0 : left(B.date, B.ses, B.type),
-				ok = n > 0;
-			return `<div class="card">${bar}<h3>1. Choose date & type</h3>
+ const bar=`<div class="steps">${[1,2,3].map(i=>`<i class="${B.step>=i?'on':''}"></i>`).join('')}</div>`;
+ if(B.step===1){const closed=!isOpen(B.date),n=closed?0:left(B.date,B.ses,B.type),ok=n>0;
+  return`<div class="card">${bar}<h3>1. Choose date & type</h3>
   <div class="seg"><button class="${B.type==='walkin'?'on':''}" onclick="B.type='walkin';render()">🎟 Walk-in ticket</button>
   <button class="${B.type==='event'?'on':''}" onclick="B.type='event';render()">🎉 Private event</button></div>
   <label>Date</label><input type="date" min="${iso(0)}" value="${B.date}" onchange="B.date=this.value;render()">
   <p class="m">🕘 Open Tue–Sun, 9AM–6PM · Closed Mondays</p>
-  ${B.type==='walkin'?` < label > Adults < /label><input type="number" min="0" value="${B.ad}" onchange="B.ad=+this.value;render()"><label>Kids</label > < input type = "number"
-			min = "0"
-			value = "${B.kd}"
-			onchange = "B.kd=+this.value;render()" > `:''}
-  <div class="avail ${ok?'g':'r'}">${closed?'✖ Closed on Mondays — please pick Tuesday to Sunday':B.type==='event'?(ok?'✔ Private venue is free on this date':'✖ Private venue already booked — pick another date'):(ok?`✔
-			$ {
-				n
-			}
-			slots left `:'✖ Fully booked')}</div>
+  ${B.type==='walkin'?`<label>Adults</label><input type="number" min="0" value="${B.ad}" onchange="B.ad=+this.value;render()"><label>Kids</label><input type="number" min="0" value="${B.kd}" onchange="B.kd=+this.value;render()">`:''}
+  <div class="avail ${ok?'g':'r'}">${closed?'✖ Closed on Mondays — please pick Tuesday to Sunday':B.type==='event'?(ok?'✔ Private venue is free on this date':'✖ Private venue already booked — pick another date'):(ok?`✔ ${n} slots left`:'✖ Fully booked')}</div>
   <p><b>Total: ₱${total().toLocaleString()}</b></p>
-  <button class="btn" onclick="next1(${n})">Continue</button></div>`
-		}
-		if(B.step === 2) return `<div class="card">${bar}<h3>2. Your details</h3>
+  <button class="btn" onclick="next1(${n})">Continue</button></div>`}
+ if(B.step===2)return`<div class="card">${bar}<h3>2. Your details</h3>
   <label>Full name</label><input value="${B.name}" oninput="B.name=this.value">
   <label>Mobile number</label><input type="tel" value="${B.phone}" oninput="B.phone=this.value">
   <label>Email</label><input type="email" value="${B.email}" oninput="B.email=this.value">
   <p class="m">Have an account? Log in to autofill (profile feature).</p>
   <button class="btn alt" onclick="B.step=1;render()">Back</button> <button class="btn" onclick="next2()">Continue</button></div>`;
-		return `<div class="card">${bar}<h3>3. Payment</h3>
+ return`<div class="card">${bar}<h3>3. Payment</h3>
   <div class="card" style="background:#ecfeff"><b>Pay ₱${total().toLocaleString()} via GCash</b><div class="m">GCash no.: 09XX-XXX-XXXX (sample) · Cecile's Pool</div></div>
   <label>Upload proof of payment (screenshot/receipt)</label><input type="file" accept="image/*" onchange="B.file=this.files[0]?.name||''">
   <p class="m">Your booking stays <b>pending</b> until staff verify the payment.</p>
-  <button class="btn alt" onclick="B.step=2;render()">Back</button> <button class="btn" onclick="submit()">Submit booking</button></div>`
-	}
-
-	function next1(n) {
-		if(!isOpen(B.date)) return alert('Sorry, we are closed on Mondays. Please pick Tuesday to Sunday.');
-		if(n < 1) return alert('Not available. Choose another date.');
-		if(B.type === 'walkin' && B.ad + B.kd < 1) return alert('Add at least 1 guest.');
-		if(B.type === 'walkin' && B.ad + B.kd > n) return alert('Only ' + n + ' slots left.');
-		B.step = 2;
-		render()
-	}
-
-	function next2() {
-		if(!B.name || !B.phone) return alert('Name and mobile are required.');
-		B.step = 3;
-		render()
-	}
-
-	function submit() {
-		if(!isOpen(B.date)) return alert('We are closed on Mondays.');
-		if(!B.file) return alert('Please upload proof of payment.');
-		if(left(B.date, B.ses, B.type) < 1) return alert('Sorry, slot was just taken.');
-		last = {
-			id: 'CEC-' + (1001 + BK.length),
-			name: B.name,
-			type: B.type,
-			date: B.date,
-			ses: B.ses,
-			qty: B.type === 'walkin' ? B.ad + B.kd : 0,
-			amt: total(),
-			st: 'pending'
-		};
-		BK.push(last);
-		B = fresh();
-		view = 'ticket';
-		render()
-	}
-
-	function ticket() {
-		if(!last) return `<div class="card">No booking yet. <button class="btn sm" onclick="go('book')">Book now</button></div>`;
-		return `<div class="card" style="text-align:center"><h3>Booking received ✔</h3>
+  <button class="btn alt" onclick="B.step=2;render()">Back</button> <button class="btn" onclick="submit()">Submit booking</button></div>`}
+function next1(n){if(!isOpen(B.date))return alert('Sorry, we are closed on Mondays. Please pick Tuesday to Sunday.');if(n<1)return alert('Not available. Choose another date.');
+ if(B.type==='walkin'&&B.ad+B.kd<1)return alert('Add at least 1 guest.');
+ if(B.type==='walkin'&&B.ad+B.kd>n)return alert('Only '+n+' slots left.');B.step=2;render()}
+function next2(){if(!B.name||!B.phone)return alert('Name and mobile are required.');B.step=3;render()}
+function submit(){if(!isOpen(B.date))return alert('We are closed on Mondays.');if(!B.file)return alert('Please upload proof of payment.');
+ if(left(B.date,B.ses,B.type)<1)return alert('Sorry, slot was just taken.');
+ last={id:'CEC-'+(1001+BK.length),name:B.name,type:B.type,date:B.date,ses:B.ses,qty:B.type==='walkin'?B.ad+B.kd:0,amt:total(),st:'pending'};
+ BK.push(last);B=fresh();view='ticket';render()}
+function ticket(){if(!last)return`<div class="card">No booking yet. <button class="btn sm" onclick="go('book')">Book now</button></div>`;
+ return`<div class="card" style="text-align:center"><h3>Booking received ✔</h3>
  <canvas id="qr" width="168" height="168"></canvas>
  <div class="stat">${last.id}</div><div>${last.name}</div>
  <div class="m">${last.type==='event'?'Private event':'Walk-in ('+last.qty+' pax)'} · ${last.date} · ${SES[last.ses]}</div>
  <p>₱${last.amt.toLocaleString()} · <span class="pill ${last.st}">${last.st}</span></p>
  <p class="m">Show this QR at the gate once approved. (Sample QR)</p>
- <button class="btn alt" onclick="print()">🖨 Print receipt</button></div>`
-	}
-
-	function drawQR() {
-		const c = $('#qr');
-		if(!c) return;
-		const x = c.getContext('2d'),
-			n = 21,
-			s = 8;
-		let h = 0;
-		for(const ch of last.id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-		x.fillStyle = '#fff';
-		x.fillRect(0, 0, 168, 168);
-		x.fillStyle = '#000';
-		for(let i = 0; i < n; i++)
-			for(let j = 0; j < n; j++) {
-				const f = (i < 7 && j < 7) || (i < 7 && j > 13) || (i > 13 && j < 7);
-				let on;
-				if(f) {
-					const a = i % 14,
-						b = j % 14,
-						u = Math.min(a, 6 - a % 7, b, 6 - b % 7);
-					on = (i % 14 < 7 ? i % 14 : 0, true);
-					const ii = i > 13 ? i - 14 : i,
-						jj = j > 13 ? j - 14 : j;
-					on = ii === 0 || ii === 6 || jj === 0 || jj === 6 || (ii > 1 && ii < 5 && jj > 1 && jj < 5)
-				} else {
-					h = (h * 1103515245 + 12345) >>> 0;
-					on = (h >> 16) & 1
-				}
-				if(on) x.fillRect(j * s, i * s, s, s)
-			}
-	}
-
-	function setSt(id, st) {
-		const b = BK.find(x => x.id === id);
-		if(st === 'approved' && BK.some(o => o !== b && o.st === 'approved' && o.date === b.date && o.type === 'event' && b.type === 'event')) return alert('Conflict: double booking detected!');
-		b.st = st;
-		render()
-	}
-
-	function admin() {
-		const ap = BK.filter(b => b.st === 'approved'),
-			pe = BK.filter(b => b.st === 'pending'),
-			rev = ap.reduce((s, b) => s + b.amt, 0);
-		const now = new Date(),
-			y = now.getFullYear(),
-			m = now.getMonth(),
-			dim = new Date(y, m + 1, 0).getDate(),
-			first = new Date(y, m, 1).getDay();
-		let cells = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => `<div class="h">${d}</div>`).join('') + '<div></div>'.repeat(first);
-		for(let d = 1; d <= dim; d++) {
-			const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,
-				l = BK.filter(b => live(b) && b.date === ds);
-			const c = l.some(b => b.type === 'event') ? 'ev' : l.some(b => b.st === 'approved') ? 'ap' : l.length ? 'bk' : '';
-			cells += `<div class="${c}">${d}</div>`
-		}
-		const ev = ap.filter(b => b.type === 'event').reduce((s, b) => s + b.amt, 0),
-			wk = rev - ev,
-			mx = Math.max(rev, 1);
-		return `<h2>Admin dashboard</h2><div class="grid">
+ <button class="btn alt" onclick="print()">🖨 Print receipt</button></div>`}
+function drawQR(){const c=$('#qr');if(!c)return;const x=c.getContext('2d'),n=21,s=8;let h=0;
+ for(const ch of last.id)h=(h*31+ch.charCodeAt(0))>>>0;
+ x.fillStyle='#fff';x.fillRect(0,0,168,168);x.fillStyle='#000';
+ for(let i=0;i<n;i++)for(let j=0;j<n;j++){const f=(i<7&&j<7)||(i<7&&j>13)||(i>13&&j<7);
+  let on;if(f){const a=i%14,b=j%14,u=Math.min(a,6-a%7,b,6-b%7);on=(i%14<7?i%14:0,true);const ii=i>13?i-14:i,jj=j>13?j-14:j;on=ii===0||ii===6||jj===0||jj===6||(ii>1&&ii<5&&jj>1&&jj<5)}
+  else{h=(h*1103515245+12345)>>>0;on=(h>>16)&1}
+  if(on)x.fillRect(j*s,i*s,s,s)}}
+function setSt(id,st){const b=BK.find(x=>x.id===id);
+ if(st==='approved'&&BK.some(o=>o!==b&&o.st==='approved'&&o.date===b.date&&o.type==='event'&&b.type==='event'))return alert('Conflict: double booking detected!');
+ b.st=st;render()}
+function admin(){
+ const ap=BK.filter(b=>b.st==='approved'),pe=BK.filter(b=>b.st==='pending'),rev=ap.reduce((s,b)=>s+b.amt,0);
+ const now=new Date(),y=now.getFullYear(),m=now.getMonth(),dim=new Date(y,m+1,0).getDate(),first=new Date(y,m,1).getDay();
+ let cells=['S','M','T','W','T','F','S'].map(d=>`<div class="h">${d}</div>`).join('')+'<div></div>'.repeat(first);
+ for(let d=1;d<=dim;d++){const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,l=BK.filter(b=>live(b)&&b.date===ds);
+  const c=l.some(b=>b.type==='event')?'ev':l.some(b=>b.st==='approved')?'ap':l.length?'bk':'';cells+=`<div class="${c}">${d}</div>`}
+ const ev=ap.filter(b=>b.type==='event').reduce((s,b)=>s+b.amt,0),wk=rev-ev,mx=Math.max(rev,1);
+ return`<h2>Admin dashboard</h2><div class="grid">
  <div class="card"><div class="m">Pending</div><div class="stat">${pe.length}</div></div>
  <div class="card"><div class="m">Approved</div><div class="stat">${ap.length}</div></div>
  <div class="card"><div class="m">Sales (approved)</div><div class="stat">₱${rev.toLocaleString()}</div></div></div>
  <div class="card"><b>Bookings</b><div class="scroll"><table><tr><th>Ref</th><th>Guest</th><th>Type</th><th>Date</th><th>₱</th><th>Status</th><th></th></tr>
- ${BK.map(b=>` < tr > < td > $ {
-			b.id
-		} < /td><td>${b.name}</td > < td > $ {
-			b.type === 'event' ? 'Event' : 'Walk-in ' + b.qty
-		} < /td><td>${b.date}<br><span class="m">${b.ses}</span > < /td><td>${b.amt}</td > < td > < span class = "pill ${b.st}" > $ {
-			b.st
-		} < /span></td > < td > $ {
-			b.st === 'pending' ? `<button class="btn ok sm" onclick="setSt('${b.id}','approved')">✔</button> <button class="btn bad sm" onclick="setSt('${b.id}','rejected')">✖</button>` : ''
-		} < /td></tr > `).join('')}</table></div></div>
+ ${BK.map(b=>`<tr><td>${b.id}</td><td>${b.name}</td><td>${b.type==='event'?'Event':'Walk-in '+b.qty}</td><td>${b.date}<br><span class="m">${b.ses}</span></td><td>${b.amt}</td><td><span class="pill ${b.st}">${b.st}</span></td>
+ <td>${b.st==='pending'?`<button class="btn ok sm" onclick="setSt('${b.id}','approved')">✔</button> <button class="btn bad sm" onclick="setSt('${b.id}','rejected')">✖</button>`:''}</td></tr>`).join('')}</table></div></div>
  <div class="card" style="margin-top:12px"><b>Calendar – ${now.toLocaleString('en',{month:'long'})} ${y}</b>
  <div class="m">Yellow: pending · Green: approved · Red: private event</div><div class="cal">${cells}</div></div>
  <div class="card" style="margin-top:12px"><b>Monthly report</b>
  <p class="m">Walk-in sales ₱${wk.toLocaleString()}</p><div class="bar" style="width:${wk/mx*100}%"></div>
  <p class="m">Event sales ₱${ev.toLocaleString()}</p><div class="bar" style="width:${ev/mx*100}%"></div>
- <p><button class="btn alt sm" onclick="print()">Export / print</button></p></div>`
-	}
-	render();
-	</script>
-</body>
-
-</html>
+ <p><button class="btn alt sm" onclick="print()">Export / print</button></p></div>`}
+render();
+</script></body></html>
